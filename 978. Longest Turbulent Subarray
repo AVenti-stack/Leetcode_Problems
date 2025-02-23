@@ -1,0 +1,22 @@
+class Solution: 
+    def maxTurbulenceSize(self, arr: List[int]) -> int:
+        res = 1
+        prev = "" #this is keeping track of the sign change
+        Left, Right = 0,1
+        while Right < len(arr):
+            if arr[Right-1] > arr[Right] and prev != ">":
+                res = max(res, Right-Left+1) 
+                #right-left+1 is to caluculate the current length of the sub array
+                Right+=1
+                prev = ">"
+            elif arr[Right-1] < arr[Right] and prev != "<":
+                res = max(res, Right-Left+1) 
+                Right+=1
+                prev = "<"
+            else:
+                Right = Right + 1 if arr[Right] == arr[Right-1] else Right
+                Left = Right - 1
+                prev = ""
+
+        return res
+        
