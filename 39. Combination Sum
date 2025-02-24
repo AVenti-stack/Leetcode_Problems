@@ -1,0 +1,29 @@
+Description
+You are given an array of distinct integers nums and a target integer target. Your task is to return a list of all unique combinations of nums where the chosen numbers sum to target.
+
+The same number may be chosen from nums an unlimited number of times. Two combinations are the same if the frequency of each of the chosen numbers is the same, otherwise they are different.
+
+You may return the combinations in any order and the order of the numbers in each combination can be in any order.
+
+EACH NUMBER CAN BE USED AN UNLITMITED NUMBER OF TIMES
+
+#BACKTRACKING
+class Solution:
+    def combinationSum(self, nums: List[int], target: int) -> List[List[int]]:
+        res = []
+        nums.sort()
+
+        def dfs(i, cur, total):
+            if total == target:
+                res.append(cur.copy())
+                return
+            
+            for j in range(i, len(nums)):
+                if total + nums[j] > target:
+                    return
+                cur.append(nums[j])
+                dfs(j, cur, total + nums[j])
+                cur.pop()
+        
+        dfs(0, [], 0)
+        return res
